@@ -16,11 +16,16 @@ datasource db {
 }
 
 model User {
-  id        String   @id @default(uuid()) // User ID (UUID-based)
-  username  String   @unique
-  password  String
-  email     String   @unique
-  createdAt DateTime @default(now())
+  id                  String   @id @default(uuid()) // User ID (UUID-based)
+  username            String   @unique
+  password            String
+  verificationToken   String? @unique
+  verificationExpires DateTime?
+  verified            Boolean @default(false)
+  resetToken          String? @unique
+  resetTokenExpires   DateTime?
+  email               String   @unique
+  createdAt           DateTime @default(now())
 
-  @@index([username, email])
+  @@index([username, email, verificationToken, resetToken])
 }

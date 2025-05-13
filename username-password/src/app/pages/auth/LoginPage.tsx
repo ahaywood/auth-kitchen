@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { handleLogin } from "./actions"
+import { handleLogin } from "./actions";
 
 const LoginPage = () => {
   const [error, setError] = useState<string | null>(null);
@@ -10,9 +10,10 @@ const LoginPage = () => {
     const result = await handleLogin(formData);
     if (result.error) {
       setError(result.error);
+    } else {
+      window.location.href = "/";
     }
-    window.location.href = "/";
-  }
+  };
 
   return (
     <form action={handleSubmit}>
@@ -27,7 +28,7 @@ const LoginPage = () => {
       </div>
       <button type="submit">Login</button>
     </form>
-  )
-}
+  );
+};
 
-export { LoginPage }
+export { LoginPage };
