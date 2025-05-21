@@ -10,7 +10,6 @@ import { env } from "cloudflare:workers";
 import { LoginPage } from "./app/pages/auth/LoginPage";
 import { User } from "@prisma/client";
 import { RegisterPage } from "./app/pages/auth/RegisterPage";
-import { VerifyPage } from "./app/pages/auth/VerifyPage";
 export { SessionDurableObject } from "./session/durableObject";
 
 export type AppContext = {
@@ -63,7 +62,6 @@ const app = defineApp([
     ]),
     route("/register", RegisterPage),
     route("/login", LoginPage),
-    route("/verify", VerifyPage),
     route("/verify", async ({ headers, request }) => {
       // get the token from the URL
       const url = new URL(request.url);
@@ -131,6 +129,7 @@ export default {
             },
           });
         };
+        await cleanUnverifiedUsers();
         break;
     }
     console.log("⏰ cron processed");
