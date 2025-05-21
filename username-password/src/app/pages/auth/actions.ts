@@ -159,6 +159,14 @@ export const handleForgotPassword = async (formData: FormData) => {
     };
   }
 
+  // if the user is not verified, return an error
+  if (!user.verified) {
+    return {
+      success: null,
+      error: "User not verified",
+    };
+  }
+
   // create a reset token
   const resetToken = crypto.randomUUID().replace(/-/g, "");
 
