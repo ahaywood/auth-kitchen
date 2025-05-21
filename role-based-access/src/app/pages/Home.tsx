@@ -1,5 +1,6 @@
 import { RequestInfo } from "rwsdk/worker";
 import { Constants } from "../lib/Constants";
+import { isUser, isAdmin, betterThanUser } from "../lib/roleHelpers";
 
 export function Home({ ctx }: RequestInfo) {
   return (
@@ -10,17 +11,11 @@ export function Home({ ctx }: RequestInfo) {
           ? `You are logged in as user ${ctx.user.username} and your role is ${ctx.user.role.name}`
           : "You are not logged in"}
       </p>
-      {ctx.user?.role.id === Constants.ROLES.USER && (
-        <p>You can only see user things.</p>
-      )}
+      {isUser({ ctx }) && <p>You can only see user things.</p>}
 
-      {ctx.user?.role.id === Constants.ROLES.ADMIN && (
-        <p>You can only see admin things.</p>
-      )}
+      {isAdmin({ ctx }) && <p>You can only see admin things.</p>}
 
-      {ctx.user?.role?.id && ctx.user?.role?.id <= Constants.ROLES.USER && (
-        <p>You can see user things.</p>
-      )}
+      {betterThanUser({ ctx }) && <p>You can see user things.</p>}
     </div>
   );
 }

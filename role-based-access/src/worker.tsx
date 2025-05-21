@@ -73,9 +73,9 @@ export default defineApp([
   },
   render(Document, [
     route("/", () => new Response("Hello, World!")),
-    route("/protected", [isAuthenticated, isUser, Home]),
     route("/admin", [isAuthenticated, isAdmin, Home]),
+    route("/user", [isAuthenticated, isUser, Home]),
     route("/guest", [isAuthenticated, Home]),
-    prefix("/user", userRoutes),
+    prefix("/auth", userRoutes),
   ]),
 ]);
